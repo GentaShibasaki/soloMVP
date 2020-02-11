@@ -1,0 +1,32 @@
+[
+  {
+    "word": "apple",
+    "definition": "a round fruit with shiny red or green skin and firm white flesh",
+    "wordOfMotherLanguage": "りんご",
+    "finishedLearning": false
+  },
+  {
+    "word": "banana",
+    "definition": "a long curved fruit with a thick yellow skin and soft flesh, that grows on trees in hot countries",
+    "wordOfMotherLanguage": "バナナ",
+    "finishedLearning": false
+  },
+  {
+    "word": "negate",
+    "definition": "to stop something from having any effect",
+    "wordOfMotherLanguage": "(…を)否定する",
+    "finishedLearning": false
+  },
+  {
+    "word": "salmon",
+    "definition": "a large fish with silver skin and pink flesh that is used for food. Salmon live in the ocean but swim up rivers to lay their eggs",
+    "wordOfMotherLanguage": "サケ、鮭",
+    "finishedLearning": false
+  },
+  {
+    "word": "bulky",
+    "definition": "(of a thing) large and difficult to move or carry. (of a person) tall and heavy",
+    "wordOfMotherLanguage": "かさばった、(重さの割には)大きい",
+    "finishedLearning": false
+  }
+]

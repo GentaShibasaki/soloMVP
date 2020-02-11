@@ -1,0 +1,61 @@
+{
+  "name": "vue-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server",
+    "hack:client": "vue-cli-service serve",
+    "hack:server": "nodemon server",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "test": "mocha --exit ./tests/test && yarn lint",
+    "migrate": "knex migrate:latest --knexfile ./knexfile.js",
+    "rollback": "knex migrate:rollback --knexfile ./knexfile.js",
+    "seed": "knex seed:run --knexfile ./knexfile.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "core-js": "^3.6.4",
+    "eslint-plugin-prettier": "^3.1.2",
+    "express": "^4.17.1",
+    "knex": "^0.20.9",
+    "morgan": "^1.9.1",
+    "vue": "^2.6.11",
+    "vuex": "^3.1.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-eslint": "~4.2.0",
+    "@vue/cli-plugin-unit-mocha": "^4.2.2",
+    "@vue/cli-service": "~4.2.0",
+    "babel-eslint": "^10.0.3",
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.4.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.1.2",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.1",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
