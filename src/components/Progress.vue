@@ -1,34 +1,34 @@
 <template>
   <div id="progress">
     <b-row>
-      <b-col cols="3" class="mt-2">The number of words</b-col>
-      <b-col cols="8" class="mt-2">
+      <b-col cols="2" class="mt-2"></b-col>
+      <b-col cols="2" class="mt-2">Total words</b-col>
+      <b-col cols="6" class="mt-2">
         <b-progress
+          height="2rem"
           :value="numberOfWords"
           :max="numberOfWords"
           show-value
           animated
         ></b-progress>
       </b-col>
+      <b-col cols="2" class="mt-2"></b-col>
     </b-row>
 
     <b-row>
-      <b-col cols="3" class="mt-2">You've finished learning</b-col>
-      <b-col cols="8" class="mt-2">
+      <b-col cols="2" class="mt-2"></b-col>
+      <b-col cols="2" class="mt-2">Finished words</b-col>
+      <b-col cols="6" class="mt-2">
         <b-progress
-          :value="0"
+          height="2rem"
+          :value="numberOfFinishedWords"
           :max="numberOfWords"
           show-value
           animated
+          variant="danger"
         ></b-progress>
       </b-col>
-    </b-row>
-
-    <b-row>
-      <b-col cols="3" class="mt-2"
-        >Today's number of times you've tried learnning</b-col
-      >
-      <b-col cols="8" class="mt-2">  </b-col>
+      <b-col cols="2" class="mt-2"></b-col>
     </b-row>
   </div>
 </template>
@@ -40,6 +40,9 @@ export default {
   computed: {
     numberOfWords() {
       return this.$store.state.numberOfWords;
+    },
+    numberOfFinishedWords() {
+      return this.$store.state.numberOfFinishedWords;
     }
   }
 };

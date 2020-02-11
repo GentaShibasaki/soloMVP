@@ -11,6 +11,7 @@ export default new Vuex.Store({
     //for quiz page
     wordsOfArray: [],
     numberOfWords: 0,
+    numberOfFinishedWords: 0,
     word: "",
     motherLgOfWord: "",
     definitionOfWord: "",
@@ -41,6 +42,12 @@ export default new Vuex.Store({
     },
     setNumberOfWords(state) {
       state.numberOfWords = state.wordsOfArray.length;
+    },
+
+    setNumberOfFinishedWords(state, count) {
+      console.log("count", count);
+      state.numberOfFinishedWords = count;
+      console.log("state.numberOfFinishedWords", state.numberOfFinishedWords);
     },
 
     //quiz page
@@ -89,11 +96,13 @@ export default new Vuex.Store({
       commit("setWordsOfArray", wordsInf);
       commit("setNumberOfWords");
     },
-    async setFinishedWord() {
-      console.log(this.state.word);
+    async setFinishedWord({ commit }) {
       await axios.patch("/api/words", {
         word: this.state.word
       });
+      const { data: finishedWords } = await axios.get("/api/words/finished");
+      console.log(finishedWords);
+      commit("setNumberOfFinishedWords", +finishedWords[0].count);
     },
     answerCheck({ commit }, userAnswer) {
       if (userAnswer === this.state.word) {
