@@ -116,8 +116,8 @@ export default new Vuex.Store({
       await axios.patch("/api/words", {
         word: this.state.word
       });
-      const { data: finishedWords } = await axios.get("/api/words/finished");
-      commit("setNumberOfFinishedWords", +finishedWords[0].count);
+      // const { data: finishedWords } = await axios.get("/api/words/finished");
+      // commit("setNumberOfFinishedWords", +finishedWords[0].count);
     },
     answerCheck({ commit }, userAnswer) {
       if (userAnswer === this.state.word) {
@@ -157,12 +157,14 @@ export default new Vuex.Store({
       commit("backToAnswer");
       commit("wordsLearningAgain");
     },
-    clear({ commit }) {
+    async clear({ commit }) {
       commit("wordsLearningAgain");
       commit("resetAnsweredWordsCount");
       commit("backToAnswer");
       commit("answerCheckClear");
       commit("goToTop");
+      const { data: finishedWords } = await axios.get("/api/words/finished");
+      commit("setNumberOfFinishedWords", +finishedWords[0].count);
     },
     async wordRegister({ commit }, wordInf) {
       await axios.post("/api/words", {

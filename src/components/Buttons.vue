@@ -26,7 +26,6 @@ export default {
   components: {},
   methods: {
     goToQuize() {
-      
       this.$store.commit("goToQuize");
     },
     goToAddWords(){

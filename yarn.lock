@@ -9284,6 +9284,11 @@ vue-loader@^15.8.3:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-radial-progress@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/vue-radial-progress/-/vue-radial-progress-0.2.10.tgz#b4064c5d0750daf0ee6a9e323b3f79bd2bd6dedc"
+  integrity sha1-tAZMXQdQ2vDuap4yOz95vSvW3tw=
+
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npm.taobao.org/vue-style-loader/download/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -9309,6 +9314,11 @@ vue@^2.6.10, vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vuejs-progress-bar@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vuejs-progress-bar/-/vuejs-progress-bar-1.2.0.tgz#d89f15689396ef8e1ae0f0ddc119f16ec5287675"
+  integrity sha512-w7XRpUUqFDH7CurNrz7c5+zVpajjTuYp1oQJNdeXfUnDRZFj9lz/107MWaiQizzlTs8dVmPZiBKbRW/L+XFaAw==
 
 vuex@^3.1.2:
   version "3.1.2"
