@@ -39,10 +39,7 @@ app.use(bodyParser.text());
 //apis
 app.get("/api/words", async (req, res) => {
   try {
-    const words = await db
-      .select()
-      .table("words")
-      .where("finishedLearning", false);
+    const words = await db.select().table("words");
     res.json(words);
     res.sendStatus(200);
   } catch (err) {
@@ -64,11 +61,37 @@ app.get("/api/words/finished", async (req, res) => {
   }
 });
 
+app.get("/api/words/quiz", async (req, res) => {
+  try {
+    const wordsForQuiz = await db("words").where("finishedLearning", false);
+    res.json(wordsForQuiz);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error loading locations!", err);
+    res.sendStatus(500);
+  }
+});
+
 app.patch("/api/words", async (req, res) => {
   try {
     await db("words")
       .where("word", req.body.word)
       .update({ finishedLearning: true });
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("Error loading locations!", err);
+    res.sendStatus(500);
+  }
+});
+
+app.post("/api/words", async (req, res) => {
+  try {
+    await db("words").insert({
+      word: req.body.word,
+      definition: req.body.definition,
+      wordOfMotherLanguage: req.body.wordOfMotherLanguage,
+      finishedLearning: false
+    });
     res.sendStatus(200);
   } catch (err) {
     console.error("Error loading locations!", err);

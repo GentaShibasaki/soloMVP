@@ -16,14 +16,14 @@
     <div v-if="checkAnswer === true" class="answerSheet">
       <b-row>
         <b-col cols="3" class="mt-2"></b-col>
-        <b-col cols="3" class="mt-2">Your answer is..</b-col>
-        <b-col cols="3" class="mt-2">{{ userAnswer }}</b-col>
+        <b-col cols="3" class="mt-2 prop">Your answer is..</b-col>
+        <b-col cols="3" class="mt-2 success">{{ userAnswer }}</b-col>
         <b-col cols="3" class="mt-2"></b-col>
       </b-row>
       <b-row>
         <b-col cols="3" class="mt-2"></b-col>
-        <b-col cols="3" class="mt-2">The answer is..</b-col>
-        <b-col cols="3" class="mt-2">{{ word }}</b-col>
+        <b-col cols="3" class="mt-2 prop">The answer is..</b-col>
+        <b-col cols="3" class="mt-2 success">{{ word }}</b-col>
         <b-col cols="3" class="mt-2"></b-col>
       </b-row>
       <b-row>
@@ -32,7 +32,9 @@
         <b-col cols="3" class="mt-2"></b-col>
       </b-row>
       <b-row>
-        <b-col class="mt-2">{{ definitionOfWord }}</b-col>
+        <b-col class="mt-2" style="fontweght:bold" variant="success">{{
+          definitionOfWord
+        }}</b-col>
       </b-row>
 
       <h2 class="mt-3" style="color:green">Correct!!</h2>
@@ -47,11 +49,13 @@
       >
       </b-form-checkbox>
 
-      <b-form-invalid-feedback :state="state"
+      <b-form-invalid-feedback :state="state" style="font-size:20px"
         >check it if you think you've memorized this
         word</b-form-invalid-feedback
       >
-      <b-form-valid-feedback :state="state">Yep!!</b-form-valid-feedback>
+      <b-form-valid-feedback :state="state" style="font-size:20px"
+        >Yep!!</b-form-valid-feedback
+      >
 
       <b-button size="lg" class="mt-3" v-on:click="nextQuiz">
         Next
@@ -61,14 +65,14 @@
     <div v-if="checkAnswer === false" class="answerSheet">
       <b-row>
         <b-col cols="3" class="mt-2"></b-col>
-        <b-col cols="3" class="mt-2">Your answer is..</b-col>
-        <b-col cols="3" class="mt-2">{{ userAnswer }}</b-col>
+        <b-col cols="3" class="mt-2 prop">Your answer is..</b-col>
+        <b-col cols="3" class="mt-2 failure">{{ userAnswer }}</b-col>
         <b-col cols="3" class="mt-2"></b-col>
       </b-row>
       <b-row>
         <b-col cols="3" class="mt-2"></b-col>
-        <b-col cols="3" class="mt-2">The answer is..</b-col>
-        <b-col cols="3" class="mt-2">{{ word }}</b-col>
+        <b-col cols="3" class="mt-2 prop">The answer is..</b-col>
+        <b-col cols="3" class="mt-2 success">{{ word }}</b-col>
         <b-col cols="3" class="mt-2"></b-col>
       </b-row>
       <b-row>
@@ -77,7 +81,11 @@
         <b-col cols="3" class="mt-2"></b-col>
       </b-row>
       <b-row>
-        <b-col class="mt-2">{{ definitionOfWord }}</b-col>
+        <b-col cols="1" class="mt-2"></b-col>
+        <b-col class="mt-2" style="fontweght:bold" variant="success">{{
+          definitionOfWord
+        }}</b-col>
+        <b-col cols="1" class="mt-2"></b-col>
       </b-row>
 
       <h2 class="mt-3" style="color:red">Not correct!!</h2>
@@ -91,11 +99,13 @@
         unchecked-value="not_accepted"
       ></b-form-checkbox>
 
-      <b-form-invalid-feedback :state="state"
+      <b-form-invalid-feedback :state="state" style="font-size:20px"
         >check it if you think you've memorized this
         word</b-form-invalid-feedback
       >
-      <b-form-valid-feedback :state="state">Yep!!</b-form-valid-feedback>
+      <b-form-valid-feedback :state="state" style="font-size:20px"
+        >Yep!!</b-form-valid-feedback
+      >
 
       <b-button size="lg" class="mt-3" v-on:click="nextQuiz">Next</b-button>
     </div>
@@ -144,25 +154,19 @@ export default {
       this.$store.dispatch("nextQuiz");
       this.userAnswer = null;
     },
-    shuffleData() {
-      this.$store.commit("shuffleWordsOfArray");
-    },
-    setWordsData() {
-      //retreive all data
-      this.$store.dispatch("setWordData");
-    },
     tryAgain() {
       this.$store.dispatch("tryAgain");
+    },
+    setWordsOfArrayForQuiz() {
+      this.$store.dispatch("setWordsOfArrayForQuiz");
     }
   },
   mounted: function() {
-    if (this.answeredWordsCount === this.wordsOfArray.length) return;
-    this.shuffleData();
-    this.setWordsData();
+    this.setWordsOfArrayForQuiz();
   },
   computed: {
-    wordsOfArray() {
-      return this.$store.state.wordsOfArray;
+    wordsOfArrayForQuiz() {
+      return this.$store.state.wordsOfArrayForQuiz;
     },
     word() {
       return this.$store.state.word;
@@ -197,5 +201,18 @@ export default {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+.success {
+  font-weight: bold;
+  color: green;
+  text-align: left;
+}
+.failure {
+  font-weight: bold;
+  color: red;
+  text-align: left;
+}
+.prop {
+  text-align: right;
 }
 </style>

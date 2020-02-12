@@ -10,7 +10,7 @@
     <b-row>
       <b-col cols="2" class="mt-3"> </b-col>
       <b-col cols="4" class="mt-3">
-        <b-button size="lg">Add words</b-button>
+        <b-button size="lg" v-on:click="goToAddWords">Add words</b-button>
       </b-col>
       <b-col cols="4" class="mt-3">
         <b-button size="lg">Delete word</b-button>
@@ -26,7 +26,11 @@ export default {
   components: {},
   methods: {
     goToQuize() {
+      
       this.$store.commit("goToQuize");
+    },
+    goToAddWords(){
+      this.$store.commit("goToAddWords");
     }
   }
 };

@@ -6,10 +6,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    topPageFlg: true,
+    topPageFlg: "topPage",
 
     //for quiz page
     wordsOfArray: [],
+    wordsOfArrayForQuiz: [],
     numberOfWords: 0,
     numberOfFinishedWords: 0,
     word: "",
@@ -21,23 +22,31 @@ export default new Vuex.Store({
     answeredWordsCount: 0
   },
   mutations: {
-    goToQuize(state) {
-      state.topPageFlg = false;
+    goToTop(state) {
+      state.topPageFlg = "topPage";
     },
-    backToHome(state) {
-      state.topPageFlg = true;
+    goToQuize(state) {
+      state.topPageFlg = "quiz";
+    },
+    goToAddWords(state) {
+      state.topPageFlg = "addWords";
     },
 
     //get words data
     setWordsOfArray(state, wordsInf) {
       state.wordsOfArray = wordsInf;
     },
+
+    setWordsOfArrayForQuiz(state, wordsInfForQuiz) {
+      state.wordsOfArrayForQuiz = wordsInfForQuiz;
+    },
+
     shuffleWordsOfArray(state) {
-      for (let i = state.wordsOfArray.length - 1; i > 0; i--) {
+      for (let i = state.wordsOfArrayForQuiz.length - 1; i > 0; i--) {
         let r = Math.floor(Math.random() * (i + 1));
-        let tmp = state.wordsOfArray[i];
-        state.wordsOfArray[i] = state.wordsOfArray[r];
-        state.wordsOfArray[r] = tmp;
+        let tmp = state.wordsOfArrayForQuiz[i];
+        state.wordsOfArrayForQuiz[i] = state.wordsOfArrayForQuiz[r];
+        state.wordsOfArrayForQuiz[r] = tmp;
       }
     },
     setNumberOfWords(state) {
@@ -79,15 +88,20 @@ export default new Vuex.Store({
       state.answeredWordsCount = 0;
     },
     setWord(state) {
-      state.word = state.wordsOfArray[state.answeredWordsCount].word;
+      console.log(state.wordsOfArrayForQuiz);
+      console.log(state.answeredWordsCount);
+      state.word = state.wordsOfArrayForQuiz[state.answeredWordsCount].word;
+      console.log("aaa");
     },
     setMotherLgOfWord(state) {
       state.motherLgOfWord =
-        state.wordsOfArray[state.answeredWordsCount].wordOfMotherLanguage;
+        state.wordsOfArrayForQuiz[
+          state.answeredWordsCount
+        ].wordOfMotherLanguage;
     },
     setDefinitionOfWord(state) {
       state.definitionOfWord =
-        state.wordsOfArray[state.answeredWordsCount].definition;
+        state.wordsOfArrayForQuiz[state.answeredWordsCount].definition;
     }
   },
   actions: {
@@ -101,7 +115,6 @@ export default new Vuex.Store({
         word: this.state.word
       });
       const { data: finishedWords } = await axios.get("/api/words/finished");
-      console.log(finishedWords);
       commit("setNumberOfFinishedWords", +finishedWords[0].count);
     },
     answerCheck({ commit }, userAnswer) {
@@ -117,7 +130,9 @@ export default new Vuex.Store({
       //count up the number of words
       commit("addAnsweredWordsCount");
 
-      if (this.state.answeredWordsCount === this.state.wordsOfArray.length) {
+      if (
+        this.state.answeredWordsCount === this.state.wordsOfArrayForQuiz.length
+      ) {
         commit("answered");
         commit("answerCheckClear");
         commit("wordsLearningFinish");
@@ -141,10 +156,27 @@ export default new Vuex.Store({
       commit("wordsLearningAgain");
     },
     clear({ commit }) {
+      commit("wordsLearningAgain");
       commit("resetAnsweredWordsCount");
       commit("backToAnswer");
       commit("answerCheckClear");
-      commit("backToHome");
+      commit("goToTop");
+    },
+    async wordRegister({ commit }, wordInf) {
+      await axios.post("/api/words", {
+        word: wordInf[0],
+        definition: wordInf[1],
+        wordOfMotherLanguage: wordInf[2]
+      });
+      this._actions.getWordsData[0]();
+      commit("goToTop");
+    },
+    async setWordsOfArrayForQuiz({ commit }) {
+      const { data: wordsInfForQuiz } = await axios.get("/api/words/quiz");
+      console.log(wordsInfForQuiz);
+      commit("setWordsOfArrayForQuiz", wordsInfForQuiz);
+      commit("shuffleWordsOfArray");
+      this._actions.setWordData[0]();
     }
   }
 });
