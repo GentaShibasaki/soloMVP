@@ -19,7 +19,8 @@ export default new Vuex.Store({
     answerFlg: false,
     finishFlg: false,
     checkAnswer: null,
-    answeredWordsCount: 0
+    answeredWordsCount: 0,
+    finishingAllWords: false
   },
   mutations: {
     goToTop(state) {
@@ -54,9 +55,7 @@ export default new Vuex.Store({
     },
 
     setNumberOfFinishedWords(state, count) {
-      console.log("count", count);
       state.numberOfFinishedWords = count;
-      console.log("state.numberOfFinishedWords", state.numberOfFinishedWords);
     },
 
     //quiz page
@@ -88,10 +87,7 @@ export default new Vuex.Store({
       state.answeredWordsCount = 0;
     },
     setWord(state) {
-      console.log(state.wordsOfArrayForQuiz);
-      console.log(state.answeredWordsCount);
       state.word = state.wordsOfArrayForQuiz[state.answeredWordsCount].word;
-      console.log("aaa");
     },
     setMotherLgOfWord(state) {
       state.motherLgOfWord =
@@ -102,6 +98,12 @@ export default new Vuex.Store({
     setDefinitionOfWord(state) {
       state.definitionOfWord =
         state.wordsOfArrayForQuiz[state.answeredWordsCount].definition;
+    },
+    setFinishingAllWords(state) {
+      state.finishingAllWords = true;
+    },
+    negateFinishingAllWords(state) {
+      state.finishingAllWords = false;
     }
   },
   actions: {
@@ -174,9 +176,20 @@ export default new Vuex.Store({
     async setWordsOfArrayForQuiz({ commit }) {
       const { data: wordsInfForQuiz } = await axios.get("/api/words/quiz");
       console.log(wordsInfForQuiz);
-      commit("setWordsOfArrayForQuiz", wordsInfForQuiz);
-      commit("shuffleWordsOfArray");
-      this._actions.setWordData[0]();
+      if (wordsInfForQuiz.length !== 0) {
+        commit("wordsLearningAgain");
+        commit("resetAnsweredWordsCount");
+        commit("backToAnswer");
+        commit("answerCheckClear");
+        commit("negateFinishingAllWords");
+        commit("setWordsOfArrayForQuiz", wordsInfForQuiz);
+        commit("shuffleWordsOfArray");
+        this._actions.setWordData[0]();
+      } else {
+        commit("answered");
+        commit("answerCheckClear");
+        commit("setFinishingAllWords");
+      }
     }
   }
 });

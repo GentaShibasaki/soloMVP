@@ -1,6 +1,6 @@
 <template>
   <div id="quize">
-    <h1 v-if="!finishFlg">{{ motherLgOfWord }}</h1>
+    <h1 v-if="!finishFlg && !finishingAllWords">{{ motherLgOfWord }}</h1>
 
     <div v-if="!answerFlg">
       <b-form-input
@@ -126,6 +126,19 @@
       >
     </div>
 
+    <div v-if="finishingAllWords === true" class="answerSheet">
+      <b-row>
+        <b-col cols="3" class="mt-2"></b-col>
+        <b-col cols="6" class="mt-2"><h1>You finished all words!</h1></b-col>
+        <b-col cols="3" class="mt-2"></b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="3" class="mt-2"></b-col>
+        <b-col cols="6" class="mt-2"><h1>Please add more words!</h1></b-col>
+        <b-col cols="3" class="mt-2"></b-col>
+      </b-row>
+    </div>
+
     <b-button size="lg" class="mt-3" v-on:click="backToHome">Go Home</b-button>
   </div>
 </template>
@@ -147,7 +160,6 @@ export default {
     },
     nextQuiz() {
       if (this.state) {
-        console.log("aadfasdfasf");
         this.status = false;
         this.$store.dispatch("setFinishedWord");
       }
@@ -191,6 +203,9 @@ export default {
     },
     state() {
       return this.status === true;
+    },
+    finishingAllWords() {
+      return this.$store.state.finishingAllWords;
     }
   }
 };
