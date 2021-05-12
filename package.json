@@ -18,7 +18,7 @@
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.4",
     "easy-circular-progress": "^1.0.4",
     "eslint-plugin-prettier": "^3.1.2",
