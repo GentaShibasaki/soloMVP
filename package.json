@@ -22,7 +22,7 @@
     "core-js": "^3.6.4",
     "easy-circular-progress": "^1.0.4",
     "eslint-plugin-prettier": "^3.1.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "knex": "^0.20.9",
     "morgan": "^1.9.1",
     "vue": "^2.6.11",
